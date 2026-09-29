@@ -1,6 +1,6 @@
 package com.smarthome;
 
-// --- 1. PRODUCT INTERFACES ---
+// --- 1. Products Interfaces ---
 interface SmartLight {
     void turnOn();
     void applyBrightness(int level);
@@ -19,137 +19,145 @@ interface SmartCamera {
     void lockdownRecording();
 }
 
-// --- 2. FAMILY A: EcoSmart ---
+// --- 2. Concrete Products (Family A - EcoSmart) ---
 class EcoSmartLight implements SmartLight {
-    @Override public void turnOn() { System.out.println("  [EcoSmart Light] Включено в эко-режиме."); }
-    @Override public void applyBrightness(int level) { System.out.println("  [EcoSmart Light] Яркость: " + level + "%."); }
-    @Override public void triggerEmergencyLight() { System.out.println("  [EcoSmart Light] Аварийный маяк: плавное мигание."); }
+    public void turnOn() { System.out.println("EcoSmart Light turned on."); }
+    public void applyBrightness(int level) { System.out.println("EcoSmart Light brightness set to " + level + "%."); }
+    public void triggerEmergencyLight() { System.out.println("EcoSmart Light flashing green for safety."); }
 }
 
 class EcoSmartThermostat implements SmartThermostat {
-    @Override public void setTemperature(int temp) { System.out.println("  [EcoSmart Thermostat] Температура: " + temp + "°C."); }
-    @Override public void enableEcoMode() { System.out.println("  [EcoSmart Thermostat] Эко-режим: 18°C."); }
-    @Override public void shutDownForSafety() { System.out.println("  [EcoSmart Thermostat] Приостановка контура."); }
+    public void setTemperature(int temp) { System.out.println("EcoSmart Thermostat set to " + temp + "°C."); }
+    public void enableEcoMode() { System.out.println("EcoSmart Thermostat enabled eco mode."); }
+    public void shutDownForSafety() { System.out.println("EcoSmart Thermostat safe shutdown."); }
 }
 
 class EcoSmartCamera implements SmartCamera {
-    @Override public void startRecording() { System.out.println("  [EcoSmart Camera] Стандартная запись."); }
-    @Override public void enableNightVision() { System.out.println("  [EcoSmart Camera] ИК-подсветка включена."); }
-    @Override public void lockdownRecording() { System.out.println("  [EcoSmart Camera] Резервная копия в облако."); }
+    public void startRecording() { System.out.println("EcoSmart Camera recording started."); }
+    public void enableNightVision() { System.out.println("EcoSmart Camera night vision ON."); }
+    public void lockdownRecording() { System.out.println("EcoSmart Camera secured lockdown."); }
 }
 
-// --- 3. FAMILY B: NexusPro ---
+// --- Concrete Products (Family B - NexusPro) ---
 class NexusProLight implements SmartLight {
-    @Override public void turnOn() { System.out.println("  [NexusPro Light] RGB-активация."); }
-    @Override public void applyBrightness(int level) { System.out.println("  [NexusPro Light] Точная яркость: " + level + "%."); }
-    @Override public void triggerEmergencyLight() { System.out.println("  [NexusPro Light] Экстренный стробоскоп."); }
+    public void turnOn() { System.out.println("NexusPro Light powered up."); }
+    public void applyBrightness(int level) { System.out.println("NexusPro Light lumens adjusted to " + level + "."); }
+    public void triggerEmergencyLight() { System.out.println("NexusPro Light high-intensity strobe."); }
 }
 
 class NexusProThermostat implements SmartThermostat {
-    @Override public void setTemperature(int temp) { System.out.println("  [NexusPro Thermostat] Климат-контроль: " + temp + "°C."); }
-    @Override public void enableEcoMode() { System.out.println("  [NexusPro Thermostat] ИИ-экорежим активирован."); }
-    @Override public void shutDownForSafety() { System.out.println("  [NexusPro Thermostat] Перекрытие клапанов."); }
+    public void setTemperature(int temp) { System.out.println("NexusPro Climate control set to " + temp + "°C."); }
+    public void enableEcoMode() { System.out.println("NexusPro Climate power-save active."); }
+    public void shutDownForSafety() { System.out.println("NexusPro Climate emergency halt."); }
 }
 
 class NexusProCamera implements SmartCamera {
-    @Override public void startRecording() { System.out.println("  [NexusPro Camera] 4K запись с ИИ."); }
-    @Override public void enableNightVision() { System.out.println("  [NexusPro Camera] Матрица ночного видения активна."); }
-    @Override public void lockdownRecording() { System.out.println("  [NexusPro Camera] Шифрование и пуш-уведомления."); }
+    public void startRecording() { System.out.println("NexusPro Cam 4K recording."); }
+    public void enableNightVision() { System.out.println("NexusPro Cam IR vision active."); }
+    public void lockdownRecording() { System.out.println("NexusPro Cam cloud lockdown."); }
 }
 
-// --- 4. FAMILY C: TitanIndustrial ---
+// --- Concrete Products (Family C - TitanIndustrial) ---
 class TitanIndustrialLight implements SmartLight {
-    @Override public void turnOn() { System.out.println("  [TitanIndustrial Light] Промышленные прожекторы."); }
-    @Override public void applyBrightness(int level) { System.out.println("  [TitanIndustrial Light] Мощный поток: " + level + "%."); }
-    @Override public void triggerEmergencyLight() { System.out.println("  [TitanIndustrial Light] Желтые маяки высокой мощности."); }
+    public void turnOn() { System.out.println("Titan Industrial Light grid active."); }
+    public void applyBrightness(int level) { System.out.println("Titan Light power output: " + level + "%."); }
+    public void triggerEmergencyLight() { System.out.println("Titan Light industrial hazard beacon."); }
 }
 
 class TitanIndustrialThermostat implements SmartThermostat {
-    @Override public void setTemperature(int temp) { System.out.println("  [TitanIndustrial Thermostat] Тяжелый климат: " + temp + "°C."); }
-    @Override public void enableEcoMode() { System.out.println("  [TitanIndustrial Thermostat] Поддержка критической температуры."); }
-    @Override public void shutDownForSafety() { System.out.println("  [TitanIndustrial Thermostat] Сброс давления."); }
+    public void setTemperature(int temp) { System.out.println("Titan HVAC core set to " + temp + "°C."); }
+    public void enableEcoMode() { System.out.println("Titan HVAC energy regulation on."); }
+    public void shutDownForSafety() { System.out.println("Titan HVAC thermal trip triggered."); }
 }
 
 class TitanIndustrialCamera implements SmartCamera {
-    @Override public void startRecording() { System.out.println("  [TitanIndustrial Camera] Бронированная запись 24/7."); }
-    @Override public void enableNightVision() { System.out.println("  [TitanIndustrial Camera] Тепловизор включен."); }
-    @Override public void lockdownRecording() { System.out.println("  [TitanIndustrial Camera] Запись в черный ящик."); }
+    public void startRecording() { System.out.println("Titan Heavy Cam recording."); }
+    public void enableNightVision() { System.out.println("Titan Heavy Cam thermal optics ON."); }
+    public void lockdownRecording() { System.out.println("Titan Heavy Cam armored vault lock."); }
 }
 
-// --- 5. NEW FAMILY D: ZenithSmart (Добавлено по Части G) ---
+// --- Concrete Products (Family D - ZenithSmart - Added for Part G) ---
 class ZenithSmartLight implements SmartLight {
-    @Override public void turnOn() { System.out.println("  [ZenithSmart Light] Квантовая подсветка активирована."); }
-    @Override public void applyBrightness(int level) { System.out.println("  [ZenithSmart Light] Ультра-точная яркость: " + level + "%."); }
-    @Override public void triggerEmergencyLight() { System.out.println("  [ZenithSmart Light] Квантовый аварийный маяк ультравысокой яркости."); }
+    public void turnOn() { System.out.println("Zenith Smart Light activated smoothly."); }
+    public void applyBrightness(int level) { System.out.println("Zenith Light ambient level: " + level + "."); }
+    public void triggerEmergencyLight() { System.out.println("Zenith Light emergency pulse."); }
 }
 
 class ZenithSmartThermostat implements SmartThermostat {
-    @Override public void setTemperature(int temp) { System.out.println("  [ZenithSmart Thermostat] Квантовый термостат: " + temp + "°C."); }
-    @Override public void enableEcoMode() { System.out.println("  [ZenithSmart Thermostat] Зеленый квантовый режим энергосбережения."); }
-    @Override public void shutDownForSafety() { System.out.println("  [ZenithSmart Thermostat] Мгновенное квантовое блокирование контура."); }
+    public void setTemperature(int temp) { System.out.println("Zenith Thermostat precise temp: " + temp + "°C."); }
+    public void enableEcoMode() { System.out.println("Zenith Thermostat AI eco optimization."); }
+    public void shutDownForSafety() { System.out.println("Zenith Thermostat safety bypass."); }
 }
 
 class ZenithSmartCamera implements SmartCamera {
-    @Override public void startRecording() { System.out.println("  [ZenithSmart Camera] 8K голографическая запись потока."); }
-    @Override public void enableNightVision() { System.out.println("  [ZenithSmart Camera] Квантовое ночное видение без потерь света."); }
-    @Override public void lockdownRecording() { System.out.println("  [ZenithSmart Camera] Синхронизация с защищенным квантовым сервером."); }
+    public void startRecording() { System.out.println("Zenith AI Camera recording feed."); }
+    public void enableNightVision() { System.out.println("Zenith AI Camera stellar night mode."); }
+    public void lockdownRecording() { System.out.println("Zenith AI Camera isolated lockdown."); }
 }
 
-// --- 6. ABSTRACT FACTORY & CONCRETE FACTORIES (Включая Family D) ---
+// --- Abstract Factory Interface ---
 interface SystemFactory {
     SmartLight createLight();
     SmartThermostat createThermostat();
     SmartCamera createCamera();
 }
 
+// --- Concrete Factories ---
 class FamilyAFactory implements SystemFactory {
-    @Override public SmartLight createLight() { return new EcoSmartLight(); }
-    @Override public SmartThermostat createThermostat() { return new EcoSmartThermostat(); }
-    @Override public SmartCamera createCamera() { return new EcoSmartCamera(); }
+    public SmartLight createLight() { return new EcoSmartLight(); }
+    public SmartThermostat createThermostat() { return new EcoSmartThermostat(); }
+    public SmartCamera createCamera() { return new EcoSmartCamera(); }
 }
 
 class FamilyBFactory implements SystemFactory {
-    @Override public SmartLight createLight() { return new NexusProLight(); }
-    @Override public SmartThermostat createThermostat() { return new NexusProThermostat(); }
-    @Override public SmartCamera createCamera() { return new NexusProCamera(); }
+    public SmartLight createLight() { return new NexusProLight(); }
+    public SmartThermostat createThermostat() { return new NexusProThermostat(); }
+    public SmartCamera createCamera() { return new NexusProCamera(); }
 }
 
 class FamilyCFactory implements SystemFactory {
-    @Override public SmartLight createLight() { return new TitanIndustrialLight(); }
-    @Override public SmartThermostat createThermostat() { return new TitanIndustrialThermostat(); }
-    @Override public SmartCamera createCamera() { return new TitanIndustrialCamera(); }
+    public SmartLight createLight() { return new TitanIndustrialLight(); }
+    public SmartThermostat createThermostat() { return new TitanIndustrialThermostat(); }
+    public SmartCamera createCamera() { return new TitanIndustrialCamera(); }
 }
 
 class FamilyDFactory implements SystemFactory {
-    @Override public SmartLight createLight() { return new ZenithSmartLight(); }
-    @Override public SmartThermostat createThermostat() { return new ZenithSmartThermostat(); }
-    @Override public SmartCamera createCamera() { return new ZenithSmartCamera(); }
+    public SmartLight createLight() { return new ZenithSmartLight(); }
+    public SmartThermostat createThermostat() { return new ZenithSmartThermostat(); }
+    public SmartCamera createCamera() { return new ZenithSmartCamera(); }
 }
 
-// --- 7. FACTORY PROVIDER (Расширен для поддержки D) ---
-class FactoryProvider {
-    public static SystemFactory getFactory(String familyType) {
-        if (familyType == null) familyType = "A";
-        switch (familyType.toUpperCase()) {
-            case "A": case "ECOSMART":
-                System.out.println("[Config] Selected Family: A (EcoSmart)");
-                return new FamilyAFactory();
-            case "B": case "NEXUSPRO":
-                System.out.println("[Config] Selected Family: B (NexusPro)");
-                return new FamilyBFactory();
-            case "C": case "TITANINDUSTRIAL":
-                System.out.println("[Config] Selected Family: C (TitanIndustrial)");
-                return new FamilyCFactory();
-            case "D": case "ZENITHSMART":
-                System.out.println("[Config] Selected Family: D (ZenithSmart)");
-                return new FamilyDFactory();
-            default:
-                throw new IllegalArgumentException("Unknown family type: " + familyType);
-        }
+// --- Factory Method Component ---
+abstract class LightCreator {
+    public abstract SmartLight createLight();
+    public void prepareAndInstallLight() {
+        SmartLight light = createLight();
+        light.turnOn();
+        light.applyBrightness(80);
     }
 }
 
-// --- 8. BUSINESS SCENARIOS ---
+class EcoSmartLightCreator extends LightCreator {
+    public SmartLight createLight() { return new EcoSmartLight(); }
+}
+
+// --- Runtime Factory Provider (Part E) ---
+class FactoryProvider {
+    public static SystemFactory getFactory(String type) {
+        if (type == null) {
+            throw new IllegalArgumentException("Factory type cannot be null");
+        }
+        return switch (type.toUpperCase()) {
+            case "A", "ECO" -> new FamilyAFactory();
+            case "B", "NEXUS" -> new FamilyBFactory();
+            case "C", "TITAN" -> new FamilyCFactory();
+            case "D", "ZENITH" -> new FamilyDFactory();
+            default -> throw new IllegalArgumentException("Unknown factory type: " + type);
+        };
+    }
+}
+
+// --- Client Class / Ecosystem (Part D & F) ---
 class SmartHomeEcosystem {
     private final SmartLight light;
     private final SmartThermostat thermostat;
@@ -162,16 +170,17 @@ class SmartHomeEcosystem {
     }
 
     public void executeAwayModeScenario() {
-        System.out.println("--- [Сценарий] Режим: Ухожу из дома ---");
-        light.applyBrightness(0);
+        System.out.println("--- Executing Away Mode ---");
+        light.turnOn();
+        light.applyBrightness(20);
+        thermostat.setTemperature(18);
         thermostat.enableEcoMode();
         camera.startRecording();
         camera.enableNightVision();
-        System.out.println();
     }
 
     public void executeEmergencyScenario() {
-        System.out.println("--- [Сценарий] ВНИМАНИЕ! Экстренная тревога ---");
+        System.out.println("--- Executing Emergency Scenario ---");
         light.triggerEmergencyLight();
         thermostat.shutDownForSafety();
         camera.lockdownRecording();
@@ -179,9 +188,9 @@ class SmartHomeEcosystem {
     }
 }
 
-// --- 9. CLIENT DEMO ---
+// --- Main Execution Class ---
 public class Main {
-    public static main(String[] args) {
+    public static void main(String[] args) {
         System.out.println("=== DEMO PART G: ADDING NEW FAMILY D (ZENITH SMART) ===\n");
 
         // Тестируем новое четвертое семейство (Family D) без изменения бизнес-логики!
