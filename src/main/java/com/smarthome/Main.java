@@ -81,13 +81,38 @@ class FamilyCFactory implements SystemFactory {
     @Override public SmartCamera createCamera() { return new TitanIndustrialCamera(); }
 }
 
-// --- 6. ARCHITECTURAL ENFORCEMENT (Client encapsulates family consistency) ---
+// --- 6. RUNTIME FACTORY SELECTOR (Configuration / Resolver) ---
+class FactoryProvider {
+    public static SystemFactory getFactory(String familyType) {
+        if (familyType == null) {
+            familyType = "A"; // Дефолтное значение
+        }
+        switch (familyType.toUpperCase()) {
+            case "A":
+            case "ECOSMART":
+                System.out.println("[Config] Selected Product Family: A (EcoSmart)");
+                return new FamilyAFactory();
+            case "B":
+            case "NEXUSPRO":
+                System.out.println("[Config] Selected Product Family: B (NexusPro)");
+                return new FamilyBFactory();
+            case "C":
+            case "TITANINDUSTRIAL":
+                System.out.println("[Config] Selected Product Family: C (TitanIndustrial)");
+                return new FamilyCFactory();
+            default:
+                throw new IllegalArgumentException("Unknown product family type: " + familyType);
+        }
+    }
+}
+
+// --- 7. ECOSYSTEM CLIENT (Works only with abstractions) ---
 class SmartHomeEcosystem {
     private final SmartLight light;
     private final SmartThermostat thermostat;
     private final SmartCamera camera;
 
-    // Dependency injection of the factory guarantees 100% compatible product family
+    // Принимает абстрактную фабрику, не зная конкретного производителя
     public SmartHomeEcosystem(SystemFactory factory) {
         this.light = factory.createLight();
         this.thermostat = factory.createThermostat();
@@ -95,24 +120,35 @@ class SmartHomeEcosystem {
     }
 
     public void runEcosystemTest() {
+        System.out.println("[Ecosystem] Running diagnostic and startup sequence...");
         light.turnOn();
-        light.applyBrightness(80);
-        thermostat.setTemperature(21);
+        light.applyBrightness(85);
+        thermostat.setTemperature(22);
         camera.startRecording();
+        System.out.println("[Ecosystem] All devices successfully synchronized!\n");
     }
 }
 
-// --- 7. CLIENT DEMO ---
+// --- 8. CLIENT DEMO (Runtime selection via command-line arguments) ---
 public class Main {
     public static void main(String[] args) {
-        System.out.println("=== DEMO PART D: COMPATIBILITY RULE (BY DESIGN) ===\n");
+        System.out.println("=== DEMO PART E: RUNTIME FACTory SELECTION ===\n");
 
-        System.out.println("Initializing EcoSmart Ecosystem (Family A):");
-        SmartHomeEcosystem ecoSystem = new SmartHomeEcosystem(new FamilyAFactory());
-        ecoSystem.runEcosystemTest();
+        // Определяем семейство через аргументы командной строки или ставим "A" по умолчанию
+        String familyArg = (args.length > 0) ? args[0] : "A";
 
-        System.out.println("\nInitializing NexusPro Ecosystem (Family B):");
-        SmartHomeEcosystem nexusSystem = new SmartHomeEcosystem(new FamilyBFactory());
-        nexusSystem.runEcosystemTest();
+        // Динамический выбор фабрики на старте программы
+        SystemFactory selectedFactory = FactoryProvider.getFactory(familyArg);
+
+        // Основная бизнес-логика работает только с абстракциями
+        SmartHomeEcosystem ecosystem = new SmartHomeEcosystem(selectedFactory);
+        ecosystem.runEcosystemTest();
+
+        // Для демонстрации работы других семейств прямо из IDEA:
+        if (args.length == 0) {
+            System.out.println("--- Demo switching via config/runtime argument programmatically ---");
+            SystemFactory factoryB = FactoryProvider.getFactory("B");
+            new SmartHomeEcosystem(factoryB).runEcosystemTest();
+        }
     }
 }
