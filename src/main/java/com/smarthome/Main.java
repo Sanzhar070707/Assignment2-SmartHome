@@ -1,6 +1,6 @@
 package com.smarthome;
 
-// --- 1. PRODUCT INTERFACES (Интерфейсы трех типов продуктов) ---
+// --- 1. PRODUCT INTERFACES ---
 interface SmartLight {
     void turnOn();
     void applyBrightness(int level);
@@ -16,47 +16,47 @@ interface SmartCamera {
 
 // --- 2. FAMILY A: EcoSmart ---
 class EcoSmartLight implements SmartLight {
-    @Override public void turnOn() { System.out.println("EcoSmart Light: включено в эко-режиме."); }
-    @Override public void applyBrightness(int level) { System.out.println("EcoSmart Light яркость: " + level + "%."); }
+    @Override public void turnOn() { System.out.println("EcoSmart Light turned on in eco mode."); }
+    @Override public void applyBrightness(int level) { System.out.println("EcoSmart Light brightness set to " + level + "%."); }
 }
 
 class EcoSmartThermostat implements SmartThermostat {
-    @Override public void setTemperature(int temp) { System.out.println("EcoSmart Thermostat температура: " + temp + "°C (энергосбережение)."); }
+    @Override public void setTemperature(int temp) { System.out.println("EcoSmart Thermostat temperature set to " + temp + "°C (energy saving)."); }
 }
 
 class EcoSmartCamera implements SmartCamera {
-    @Override public void startRecording() { System.out.println("EcoSmart Camera: запись в стандартном разрешении."); }
+    @Override public void startRecording() { System.out.println("EcoSmart Camera recording in standard resolution."); }
 }
 
 // --- 3. FAMILY B: NexusPro ---
 class NexusProLight implements SmartLight {
-    @Override public void turnOn() { System.out.println("NexusPro Light: плавная RGB активация."); }
-    @Override public void applyBrightness(int level) { System.out.println("NexusPro Light кадровая яркость: " + level + "%."); }
+    @Override public void turnOn() { System.out.println("NexusPro Light turned on with RGB and Matter support."); }
+    @Override public void applyBrightness(int level) { System.out.println("NexusPro Light precision brightness set to " + level + "%."); }
 }
 
 class NexusProThermostat implements SmartThermostat {
-    @Override public void setTemperature(int temp) { System.out.println("NexusPro Thermostat температура: " + temp + "°C (умный климат-контроль)."); }
+    @Override public void setTemperature(int temp) { System.out.println("NexusPro Thermostat temperature set to " + temp + "°C (smart climate)."); }
 }
 
 class NexusProCamera implements SmartCamera {
-    @Override public void startRecording() { System.out.println("NexusPro Camera: запись в 4K с ИИ-распознаванием."); }
+    @Override public void startRecording() { System.out.println("NexusPro Camera recording in 4K with AI recognition."); }
 }
 
 // --- 4. FAMILY C: TitanIndustrial ---
 class TitanIndustrialLight implements SmartLight {
-    @Override public void turnOn() { System.out.println("TitanIndustrial Light: аварийный мощный режим."); }
-    @Override public void applyBrightness(int level) { System.out.println("TitanIndustrial Light фиксация: " + level + "%."); }
+    @Override public void turnOn() { System.out.println("TitanIndustrial Light turned on in emergency high-power mode."); }
+    @Override public void applyBrightness(int level) { System.out.println("TitanIndustrial Light fixed output set to " + level + "%."); }
 }
 
 class TitanIndustrialThermostat implements SmartThermostat {
-    @Override public void setTemperature(int temp) { System.out.println("TitanIndustrial Thermostat температура: " + temp + "°C (промышленный контроль)."); }
+    @Override public void setTemperature(int temp) { System.out.println("TitanIndustrial Thermostat temperature set to " + temp + "°C (industrial control)."); }
 }
 
 class TitanIndustrialCamera implements SmartCamera {
-    @Override public void startRecording() { System.out.println("TitanIndustrial Camera: защищенная бронированная запись 24/7."); }
+    @Override public void startRecording() { System.out.println("TitanIndustrial Camera recording securely 24/7."); }
 }
 
-// --- 5. ABSTRACT FACTORY & CONCRETE FACTORIES (Абстрактная фабрика и семейства) ---
+// --- 5. ABSTRACT FACTORY & CONCRETE FACTORIES ---
 interface SystemFactory {
     SmartLight createLight();
     SmartThermostat createThermostat();
@@ -81,30 +81,38 @@ class FamilyCFactory implements SystemFactory {
     @Override public SmartCamera createCamera() { return new TitanIndustrialCamera(); }
 }
 
-// --- 6. CLIENT DEMO (Точка входа) ---
+// --- 6. ARCHITECTURAL ENFORCEMENT (Client encapsulates family consistency) ---
+class SmartHomeEcosystem {
+    private final SmartLight light;
+    private final SmartThermostat thermostat;
+    private final SmartCamera camera;
+
+    // Dependency injection of the factory guarantees 100% compatible product family
+    public SmartHomeEcosystem(SystemFactory factory) {
+        this.light = factory.createLight();
+        this.thermostat = factory.createThermostat();
+        this.camera = factory.createCamera();
+    }
+
+    public void runEcosystemTest() {
+        light.turnOn();
+        light.applyBrightness(80);
+        thermostat.setTemperature(21);
+        camera.startRecording();
+    }
+}
+
+// --- 7. CLIENT DEMO ---
 public class Main {
     public static void main(String[] args) {
-        System.out.println("=== DEMO PART C: ABSTRACT FACTORY ===\n");
+        System.out.println("=== DEMO PART D: COMPATIBILITY RULE (BY DESIGN) ===\n");
 
-        // Тестируем Семейство А (EcoSmart)
-        System.out.println("--- Building Family A (EcoSmart) ---");
-        SystemFactory factoryA = new FamilyAFactory();
-        factoryA.createLight().turnOn();
-        factoryA.createThermostat().setTemperature(20);
-        factoryA.createCamera().startRecording();
+        System.out.println("Initializing EcoSmart Ecosystem (Family A):");
+        SmartHomeEcosystem ecoSystem = new SmartHomeEcosystem(new FamilyAFactory());
+        ecoSystem.runEcosystemTest();
 
-        // Тестируем Семейство B (NexusPro)
-        System.out.println("\n--- Building Family B (NexusPro) ---");
-        SystemFactory factoryB = new FamilyBFactory();
-        factoryB.createLight().turnOn();
-        factoryB.createThermostat().setTemperature(22);
-        factoryB.createCamera().startRecording();
-
-        // Тестируем Семейство C (TitanIndustrial)
-        System.out.println("\n--- Building Family C (TitanIndustrial) ---");
-        SystemFactory factoryC = new FamilyCFactory();
-        factoryC.createLight().turnOn();
-        factoryC.createThermostat().setTemperature(18);
-        factoryC.createCamera().startRecording();
+        System.out.println("\nInitializing NexusPro Ecosystem (Family B):");
+        SmartHomeEcosystem nexusSystem = new SmartHomeEcosystem(new FamilyBFactory());
+        nexusSystem.runEcosystemTest();
     }
 }
